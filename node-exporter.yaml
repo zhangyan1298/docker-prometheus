@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+ name: nodeexporter-ds
+ labels:
+  name: nodeexporter-ds
+spec:
+ template:
+  metadata:
+   name: nodeexporter-ds
+   labels:
+    name: nodeexporter-ds
+  spec:
+   hostNetwork: true
+   containers:
+   - name: nodeexporter-ds
+     image: linuxtips/node-exporter_alpine
+     volumeMounts:
+     - name: proc
+       mountPath: /usr/proc
+     - name: sys
+       mountPath: /usr/sys
+     - name: rootfs
+       mountPath: /rootfs
+     resources:
+      limits:
+       cpu: 256m
+       memory: 256Mi
+      requests:
+       cpu: 128m
+       memory: 128Mi
+     ports:
+      - containerPort: 9100
+        hostPort: 9100
+   volumes:
+   - name: proc
+     hostPath:
+      path: /proc
+   - name: sys
+     hostPath:
+      path: /sys
+   - name: rootfs
+     hostPath:
+      path: /
+  
