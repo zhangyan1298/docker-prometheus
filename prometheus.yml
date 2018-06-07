@@ -29,7 +29,7 @@ scrape_configs:
       - targets: ['localhost:9090']
   - job_name: 'container'
     static_configs:
-    - targets: ['192.168.0.52:4194','192.168.0.5:4194']
+    - targets: ['192.168.0.52:4194','192.168.0.5:4194','172.16.0.199:4194']
   - job_name: k8s-node1
     static_configs:
       - targets: ['10.0.17.8:9100']
@@ -41,3 +41,9 @@ scrape_configs:
       - targets: ['10.0.6.10:9100']
         labels:
           instance: sys2
+          
+   - job_name: k8s
+    static_configs:
+      - targets: ['172.16.0.199:9100']
+        labels:
+          instance: sys3
