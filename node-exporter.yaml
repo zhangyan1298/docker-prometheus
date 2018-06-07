@@ -1,20 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
- name: nodeexporter-ds
+ name: exporter-ds
  labels:
-  name: nodeexporter-ds
+  name: exporter-ds
 spec:
  template:
   metadata:
-   name: nodeexporter-ds
+   name: exporter-ds
    labels:
-    name: nodeexporter-ds
+    name: exporter-ds
   spec:
    hostNetwork: true
    containers:
    - name: nodeexporter-ds
-     image: linuxtips/node-exporter_alpine
+     image: dockeryanxiao/node-exporter
+     command: ["/run.sh"]
      volumeMounts:
      - name: proc
        mountPath: /usr/proc
@@ -42,4 +43,5 @@ spec:
    - name: rootfs
      hostPath:
       path: /
+
   
