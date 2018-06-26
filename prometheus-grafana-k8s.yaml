@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+ name: prometheus-del
+ labels:
+  app: prometheus
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   app: prometheus
+  matchExpressions:
+   - {key: app,operator: In,values: [prometheus]}
+ template:
+  metadata:
+   name: prometheus-del
+   labels:
+     app: prometheus
+  spec:
+    containers:
+    - name: prometheus-pod
+      image: docker.io/prom/prometheus
+      resources:
+        limits:
+         cpu: 200m
+         memory: 300Mi
+        requests:
+         cpu: 150m
+         memory: 256Mi
+      ports:
+      - containerPort: 9090
+      volumeMounts:
+      - name: prometh-v
+        mountPath: /prometheus
+      - name: config-volume
+        mountPath: /etc/prometheus/
+    volumes:
+    - name: prometh-v
+      emptyDir: {}
+    - name: config-volume
+      configMap:
+       name: prometheus
+       items:
+       - key: prometheus.yaml
+         path: prometheus.yml
