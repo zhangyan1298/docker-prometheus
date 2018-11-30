@@ -1,2 +1,2 @@
 FROM docker.io/prom/prometheus
-COPY prometheus.yml /etc/prometheus/prometheus.yml
+COPY prometheus-targets /etc/prometheus/prometheus.yml
